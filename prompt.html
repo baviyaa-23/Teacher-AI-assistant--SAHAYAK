@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prompt Generator – Sahayak</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>📝 Prompt Generator</h1>
+    <a href="/">⬅️ Back to Dashboard</a>
+
+    <!-- 🌐 Language Selector -->
+    <h4>🌐 Choose Response Language:</h4>
+    <select id="language-select">
+      <option value="English">English</option>
+      <option value="Tamil">Tamil</option>
+      <option value="Hindi">Hindi</option>
+      <option value="Telugu">Telugu</option>
+      <option value="Kannada">Kannada</option>
+      <option value="Malayalam">Malayalam</option>
+      <option value="Marathi">Marathi</option>
+      <option value="Gujarati">Gujarati</option>
+      <option value="Bengali">Bengali</option>
+    </select>
+
+    <form id="prompt-only-form">
+      <textarea id="prompt-only" placeholder="e.g., Write a short Hindi poem about school..."></textarea>
+      <button type="submit">🚀 Submit Prompt</button>
+    </form>
+
+    <div id="loading" class="hidden">⏳ Processing...</div>
+    <div id="response"></div>
+  </div>
+
+  <script>
+    function getLanguage() {
+      return document.getElementById("language-select").value;
+    }
+
+    document.getElementById("prompt-only-form").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const prompt = document.getElementById("prompt-only").value;
+      const language = getLanguage();
+
+      document.getElementById("loading").classList.remove("hidden");
+      document.getElementById("response").innerText = "";
+
+      const res = await fetch("/prompt-only", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt, language })
+      });
+
+      const data = await res.json();
+      document.getElementById("loading").classList.add("hidden");
+      document.getElementById("response").innerText = data.response || ("⚠️ " + data.error);
+    });
+  </script>
+</body>
+</html>

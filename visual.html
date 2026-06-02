@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Visual Aid Generator – Sahayak</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>🖍️ Visual Aid Generator</h1>
+    <a href="/">⬅️ Back to Dashboard</a>
+
+    <!-- 🌐 Language Selector -->
+    <h4>🌐 Choose Response Language:</h4>
+    <select id="language-select">
+      <option value="English">English</option>
+      <option value="Tamil">Tamil</option>
+      <option value="Hindi">Hindi</option>
+      <option value="Telugu">Telugu</option>
+      <option value="Kannada">Kannada</option>
+      <option value="Malayalam">Malayalam</option>
+      <option value="Marathi">Marathi</option>
+      <option value="Gujarati">Gujarati</option>
+      <option value="Bengali">Bengali</option>
+    </select>
+
+    <!-- Visual Form -->
+    <form id="visual-form">
+      <textarea id="visual-prompt" placeholder="e.g., Draw a labeled diagram of the water cycle..."></textarea>
+      <button type="submit">🎨 Generate Visual Aid</button>
+    </form>
+
+    <!-- Response Section -->
+    <div id="loading" class="hidden">⏳ Processing...</div>
+    <div id="response"></div>
+  </div>
+
+  <script>
+    function getLanguage() {
+      return document.getElementById("language-select").value;
+    }
+
+    document.getElementById("visual-form").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const prompt = document.getElementById("visual-prompt").value;
+      const language = getLanguage();
+
+      document.getElementById("loading").classList.remove("hidden");
+      document.getElementById("response").innerText = "";
+
+      const res = await fetch("/visual-aid", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt, language })
+      });
+
+      const data = await res.json();
+      document.getElementById("loading").classList.add("hidden");
+      document.getElementById("response").innerText = data.response || ("⚠️ " + data.error);
+    });
+  </script>
+</body>
+</html>

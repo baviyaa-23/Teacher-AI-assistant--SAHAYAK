@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome to Sahayak Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #acb6e5);
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+    .dashboard-container {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+    }
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+      color: #444;
+    }
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+    }
+    .feature-card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      width: 250px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.2s;
+    }
+    .feature-card:hover {
+      transform: scale(1.05);
+    }
+    .feature-card h2 {
+      margin-top: 0;
+      font-size: 1.3rem;
+    }
+    .feature-card p {
+      font-size: 0.95rem;
+      color: #555;
+    }
+    .feature-card a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 16px;
+      background: #4285f4;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+    .feature-card a:hover {
+      background: #3367d6;
+    }
+  </style>
+</head>
+<body>
+  <div class="dashboard-container">
+    <h1>👩‍🏫 Welcome to Sahayak</h1>
+    <p>Your AI-Powered Teaching Assistant</p>
+
+    <div class="card-grid">
+      <div class="feature-card">
+        <h2>📝 Prompt Generator</h2>
+        <p>Ask anything and get instant AI help.</p>
+        <a href="/prompt">Open</a>
+      </div>
+
+      <div class="feature-card">
+        <h2>🖼️ Worksheet Assistant</h2>
+        <p>Upload worksheets and get AI assistance.</p>
+        <a href="/upload">Open</a>
+      </div>
+
+      <div class="feature-card">
+        <h2>🖍️ Visual Aid Generator</h2>
+        <p>Create diagrams and visual content using prompts.</p>
+        <a href="/visual">Open</a>
+      </div>
+
+      <div class="feature-card">
+        <h2>📅 Weekly Lesson Planner</h2>
+        <p>Plan your week's lessons with AI assistance.</p>
+        <a href="/planner">Open</a>
+      </div>
+
+      <div class="feature-card">
+        <h2>🕓 View History</h2>
+        <p>See previous prompts and responses.</p>
+        <a href="/history">Open</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

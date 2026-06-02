@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Worksheet Assistant – Sahayak</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>🖼️ Worksheet Assistant</h1>
+    <a href="/">⬅️ Back to Dashboard</a>
+
+    <!-- 🌐 Language Selector -->
+    <h4>🌐 Choose Response Language:</h4>
+    <select id="language-select">
+      <option value="English">English</option>
+      <option value="Tamil">Tamil</option>
+      <option value="Hindi">Hindi</option>
+      <option value="Telugu">Telugu</option>
+      <option value="Kannada">Kannada</option>
+      <option value="Malayalam">Malayalam</option>
+      <option value="Marathi">Marathi</option>
+      <option value="Gujarati">Gujarati</option>
+      <option value="Bengali">Bengali</option>
+    </select>
+
+    <!-- 🖼️ Image + Prompt Form -->
+    <form id="worksheet-form" enctype="multipart/form-data">
+      <label for="grade">Grade:</label>
+      <select name="grade" id="grade">
+        {% for i in range(1, 13) %}
+          <option value="Grade {{ i }}">Grade {{ i }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="prompt">Teacher's Prompt:</label>
+      <textarea name="prompt" id="prompt" placeholder="What do you want the assistant to do?"></textarea>
+
+      <label for="image">Upload Worksheet Image:</label>
+      <input type="file" name="image" id="image" accept="image/*" required>
+
+      <button type="submit">📤 Upload & Ask</button>
+    </form>
+
+    <!-- 🔄 Loading + Response -->
+    <div id="loading" class="hidden">⏳ Processing...</div>
+    <div id="response"></div>
+  </div>
+
+  <script>
+    function getLanguage() {
+      return document.getElementById("language-select").value;
+    }
+
+    document.getElementById("worksheet-form").addEventListener("submit", async function(e) {
+      e.preventDefault();
+      const formData = new FormData(this);
+      formData.append("language", getLanguage());
+
+      document.getElementById("loading").classList.remove("hidden");
+      document.getElementById("response").innerText = "";
+
+      const res = await fetch("/upload-image", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+      document.getElementById("loading").classList.add("hidden");
+      document.getElementById("response").innerText = data.response || ("⚠️ " + data.error);
+    });
+  </script>
+</body>
+</html>
