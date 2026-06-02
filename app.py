@@ -12,7 +12,7 @@ app = Flask(__name__)
 pytesseract.pytesseract.tesseract_cmd = r"C:\Users\User 2\Downloads\tesseract.exe"
 
 # ✅ Gemini setup
-GEMINI_API_KEY = "AIzaSyC1jR5yevS1VXndP6zsz51s9CVCScJPh5Y"
+GEMINI_API_KEY = #"your api key"
 GEMINI_URL = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
